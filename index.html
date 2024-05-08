@@ -1,0 +1,85 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Monty Hall Simulation</title> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js for visualizing results -->
+</head> 
+<body> 
+    <label for="trial">Number of Trials</label> 
+    <input type="number" id="trial" value="1000000"/> <!-- User inputs number of trials -->
+    <button id="simulateButton">Start Simulation</button> 
+    <canvas id="resultChart"></canvas> <!-- Display chart results here -->
+    <div id="winRate">Win rate without changing: 0%, Win rate with changing: 0%</div> <!-- Display current win rates -->
+    <script> 
+        const ctx = document.getElementById('resultChart').getContext('2d'); // Set up the chart context
+        let simulateCount = 0, notChangeWin = 0, changeWin = 0; // Initialize simulation counters
+
+        // Define the chart with initial settings
+        const resultChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Number of Trials', 'Success without changing', 'Success with changing'],
+                datasets: [{
+                    label: 'Simulation Results',
+                    data: [simulateCount, notChangeWin, changeWin],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Set up simulation button and input handlers
+        const simulateButton = document.getElementById('simulateButton');
+        const trialInput = document.getElementById("trial");
+
+        simulateButton.addEventListener('click', () => {
+            simulateCount = notChangeWin = changeWin = 0; // Reset counters
+            const trial = parseInt(trialInput.value);
+            const updateInterval = 1000; // Update the chart every 1000 simulations
+
+            function simulate() {
+                for (let i = 0; i < updateInterval && simulateCount < trial; i++) {
+                    simulateCount++;
+                    notChangeWin += simulateMontyHall(false) ? 1 : 0;
+                    changeWin += simulateMontyHall(true) ? 1 : 0;
+                }
+                document.getElementById('winRate').innerText = `Win rate without changing: ${(notChangeWin / simulateCount * 100).toFixed(2)}%, Win rate with changing: ${(changeWin / simulateCount * 100).toFixed(2)}%`;
+                updateChart(); // Refresh the chart with new data
+                if (simulateCount < trial) setTimeout(simulate, 10);
+            }
+            simulate();
+        });
+
+        function updateChart() {
+            resultChart.data.datasets[0].data = [simulateCount, notChangeWin, changeWin];
+            resultChart.update();
+        }
+
+        function simulateMontyHall(changeDecision) { // Simulate the game decision
+            const doors = [0, 0, 0];
+            doors[Math.floor(Math.random() * 3)] = 1; // Place car behind one door
+
+            let choiceIdx = Math.floor(Math.random() * 3); // Participant makes an initial choice
+            if (changeDecision) {
+                let openIdx = doors.findIndex((door, idx) => idx !== choiceIdx && door === 0);
+                choiceIdx = 3 - choiceIdx - openIdx; // Switch to the other unopened door
+            }
+            return doors[choiceIdx] === 1; // Return true if car is behind the final choice
+        }
+    </script> 
+</body> 
+</html>
