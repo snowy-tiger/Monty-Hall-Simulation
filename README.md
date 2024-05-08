@@ -3,7 +3,7 @@ Welcome to the **Monty Hall Simulation** project! This repository contains a sim
 
 ### What is the Monty Hall Problem? :question:
 
-The Monty Hall problem is a probability puzzle based on a game show scenario where a contestant is asked to choose one of three doors. Behind one door is a car, and behind the other two doors are goats. After the contestant picks a door, the host, who knows what's behind each door, opens another door, revealing a goat. The contestant then has the option to stick with their original choice or switch to the other unopened door.
+The Monty Hall problem is a probability puzzle based on a game show scenario where a contestant is asked to choose one of three doors. Behind a door is a car, and behind the other two doors are goats. After the contestant picks a door, the host, who knows what's behind each door, opens another door, revealing a goat. The contestant then has the option to stick with their original choice or switch to the other unopened door.
 
 ### How to Run the Simulation :computer:
 
