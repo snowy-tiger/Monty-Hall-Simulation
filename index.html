@@ -1,10 +1,17 @@
+<!-- 
+Copyright (c) 2024 HyeonbeomHeo <hyunbum75@gmail.com>
+Released under the MIT license
+See LICENSE file for details
+-->
+
 <!DOCTYPE html> 
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Monty Hall Simulation</title> 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js for visualizing results -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js is available under the MIT license. More information at https://www.chartjs.org/ -->
 </head> 
 <body> 
     <label for="trial">Number of Trials</label> 
@@ -12,6 +19,8 @@
     <button id="simulateButton">Start Simulation</button> 
     <canvas id="resultChart"></canvas> <!-- Display chart results here -->
     <div id="winRate">Win rate without changing: 0%, Win rate with changing: 0%</div> <!-- Display current win rates -->
+    <p>&copy; 2024 Hyeonbeom Heo.</p>
+    
     <script> 
         const ctx = document.getElementById('resultChart').getContext('2d'); // Set up the chart context
         let simulateCount = 0, notChangeWin = 0, changeWin = 0; // Initialize simulation counters
